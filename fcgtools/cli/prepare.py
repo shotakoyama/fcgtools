@@ -91,6 +91,10 @@ def fix_train(data):
             assert ' . ' in feedback
             feedback = feedback.replace(' . ', '. ')
 
+        if index in {173, 2991}:
+            assert 't<' in feedback
+            feedback = feedback.replace('t<', 't <')
+
         if index == 216:
             assert '’instead' in feedback
             feedback = feedback.replace('’instead', 'instead')
@@ -135,6 +139,10 @@ def fix_train(data):
             assert 'wed”' in feedback
             feedback = feedback.replace('wed”', "wed''")
 
+        if index in {1404, 1755, 2837, 3886}:
+            assert '>m' in feedback
+            feedback = feedback.replace('>m', '> m')
+
         if index == 1748:
             assert "'''" in feedback
             feedback = feedback.replace("'''", '``')
@@ -147,6 +155,10 @@ def fix_train(data):
             assert ' <<on> ' in feedback
             feedback = feedback.replace(' <<on> ', ' <<on>> ')
 
+        if index == 2221:
+            assert '>f' in feedback
+            feedback = feedback.replace('>f', '> f')
+
         if index == 2556:
             assert "'''" in feedback
             feedback = feedback.replace("'''", "'")
@@ -158,6 +170,10 @@ def fix_train(data):
         if index == 2914:
             assert ' <<between> ' in feedback
             feedback = feedback.replace(' <<between> ', ' <<between>> ')
+
+        if index == 2932:
+            assert '>>h' in feedback
+            feedback = feedback.replace('>>h', '>>')
 
         if index == 2950:
             assert "'peripherally in''" in feedback
@@ -185,6 +201,10 @@ def fix_train(data):
             assert ' << as>> ' in feedback
             feedback = feedback.replace(' << as>> ', ' <<as>> ')
 
+        if index == 3260:
+            assert '>c' in feedback
+            feedback = feedback.replace('>c', '> c')
+
         if index == 3265:
             assert ' << college >> ' in feedback
             assert ' ,<<at>> ' in feedback
@@ -194,6 +214,10 @@ def fix_train(data):
         if index == 3277:
             assert ' <preposition>> ' in feedback
             feedback = feedback.replace(' <preposition>> ', ' <preposition> ')
+
+        if index == 3789:
+            assert 'e<' in feedback
+            feedback = feedback.replace('e<', 'e <')
 
         if index == 3987:
             assert ' <<worry> ' in feedback
@@ -218,6 +242,10 @@ def fix_train(data):
         if index == 4548:
             assert '.Use ' in feedback
             feedback = feedback.replace('.Use ', '. Use ')
+
+        if index == 4626:
+            assert '>i' in feedback
+            feedback = feedback.replace('>i', '> i')
 
         if index == 4842:
             assert ' <<of >>. ' in feedback
