@@ -7,7 +7,7 @@ class Accumulator:
         self.clear_tmp()
 
     def update(self, batch, loss, lr):
-        self.tmp_loss_list.append(loss.item())
+        self.tmp_loss_list.append(loss)
         self.tmp_wpb_list.append(batch.get_num_tokens())
         self.tmp_spb_list.append(len(batch))
         self.tmp_lr_list.append(lr)

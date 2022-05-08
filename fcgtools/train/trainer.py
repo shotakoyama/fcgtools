@@ -47,10 +47,12 @@ class Trainer:
                 self.grad_to_init = False
 
             with torch.cuda.amp.autocast():
-                loss = self.losscalc(batch) / self.step_interval
+                loss = self.losscalc(batch)
+                loss_val = loss.item()
+                loss = loss / self.step_interval
             self.opter.scaler.scale(loss).backward()
             self.num_accum += 1
-            self.train_accum.update(batch, loss, self.opter.get_lr())
+            self.train_accum.update(batch, loss_val, self.opter.get_lr())
 
             if self.num_accum == self.step_interval:
                 this_step += 1
@@ -59,7 +61,10 @@ class Trainer:
                 self.opter.step()
                 self.grad_to_init = True
                 logger.info(self.train_accum.step_log(
-                    self.epoch, num_steps, grad = self.opter.total_grad_norm))
+                    self.epoch,
+                    num_steps,
+                    grad = self.opter.total_grad_norm))
+
         logger.info(self.train_accum.epoch_log(self.epoch, num_steps))
 
     def valid(self):
@@ -69,7 +74,7 @@ class Trainer:
         for index, batch in enumerate(self.valid_loader):
             with torch.no_grad():
                 loss = self.losscalc(batch)
-            accum.update(batch, loss, self.opter.get_lr())
+            accum.update(batch, loss.item(), self.opter.get_lr())
         accum.step_log(self.epoch, len(self.valid_loader))
         logger.info(accum.epoch_log(self.epoch))
 
