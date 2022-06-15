@@ -34,6 +34,11 @@ def parser_args():
             '--order-by-bleu',
             dest = 'order',
             action = 'store_true')
+    parser.add_argument(
+            '-v',
+            '--verbose',
+            dest = 'verbose',
+            action = 'store_true')
     return parser.parse_args()
 
 
@@ -56,7 +61,7 @@ def corpus_level(hyp_list, ref_list):
     print('{:.2f}'.format(f))
 
 
-def sent_level(hyp_list, ref_list, order_by_bleu):
+def sent_level(hyp_list, ref_list, order_by_bleu, verbose):
 
     bleu_list = [
         (i, fcg_sent_bleu(hyp, ref))
@@ -67,9 +72,12 @@ def sent_level(hyp_list, ref_list, order_by_bleu):
         bleu_list.sort(key = lambda x: x[1])
 
     for i, bleu in bleu_list:
-        print('{}\t{:.2f}'.format(i + 1, bleu))
-        print('hyp: {}'.format(hyp_list[i]))
-        print('ref: {}'.format(ref_list[i]))
+        if verbose:
+            print('{}\t{:.2f}'.format(i + 1, bleu))
+            print('hyp: {}'.format(hyp_list[i]))
+            print('ref: {}'.format(ref_list[i]))
+        else:
+            print('{:.2f}'.format(bleu))
 
 
 def main():
@@ -78,7 +86,7 @@ def main():
     hyp_list, ref_list = load_inputs(args.hyp, args.ref, args.textref)
 
     if args.sentlevel:
-        sent_level(hyp_list, ref_list, args.order)
+        sent_level(hyp_list, ref_list, args.order, args.verbose)
     else:
         corpus_level(hyp_list, ref_list)
 
